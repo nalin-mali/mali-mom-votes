@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Mali – Mom Votes</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    background: #ede8e2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 32px 16px;
+  }
+  .phone {
+    width: 375px;
+    background: #fff;
+    border-radius: 44px;
+    overflow: hidden;
+    box-shadow: 0 24px 72px rgba(0,0,0,0.22);
+    border: 1.5px solid #ddd6cc;
+  }
+  .status-bar {
+    background: #fff;
+    padding: 16px 24px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #111;
+  }
+  .header {
+    background: #fff;
+    padding: 8px 20px 0;
+    border-bottom: 1px solid #f0ebe4;
+  }
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .header-title {
+    font-size: 21px;
+    font-weight: 800;
+    color: #1a1a1a;
+    letter-spacing: -0.3px;
+  }
+  .header-title span { color: #F08180; }
+  .header-sub {
+    font-size: 12px;
+    color: #aaa;
+    font-weight: 500;
+  }
+  .tabs {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #aaa;
+    white-space: nowrap;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  .tab.active { color: #F08180; border-bottom: 2px solid #F08180; font-weight: 700; }
+  .scroll-area {
+    overflow-y: auto;
+    max-height: 680px;
+    padding: 16px 16px 24px;
+    background: #faf7f3;
+  }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    margin-top: 6px;
+  }
+  .section-title { font-size: 15px; font-weight: 800; color: #1a1a1a; }
+  .see-all { font-size: 12px; color: #F08180; font-weight: 700; cursor: pointer; }
+
+  /* WINNER BANNER */
+  .winner-banner {
+    background: linear-gradient(120deg, #fff8f5 0%, #fff 100%);
+    border: 1.5px solid #ffd4c2;
+    border-radius: 18px;
+    padding: 14px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .winner-img-wrap { flex-shrink: 0; width: 64px; height: 64px; border-radius: 14px; overflow: hidden; }
+  .winner-info { flex: 1; min-width: 0; }
+  .winner-eyebrow { font-size: 10px; font-weight: 800; color: #F08180; text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 3px; }
+  .winner-name { font-size: 14px; font-weight: 800; color: #1a1a1a; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .winner-detail { font-size: 11px; color: #999; }
+  .winner-btn {
+    background: #F08180;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 9px 14px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-family: inherit;
+    transition: background 0.2s;
+  }
+  .winner-btn:hover { background: #d96e6e; }
+
+  /* BATTLE CARD */
+  .battle-card {
+    background: #fff;
+    border-radius: 22px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+    border: 1px solid #ede8e2;
+  }
+  .battle-eyebrow {
+    font-size: 10px;
+    font-weight: 800;
+    color: #F08180;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .battle-question {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 14px;
+    line-height: 1.45;
+  }
+  .battle-options {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .option-card {
+    flex: 1;
+    border: 2px solid #ede8e2;
+    border-radius: 16px;
+    padding: 12px 8px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.25s, background 0.25s, transform 0.15s;
+    background: #fafaf8;
+    user-select: none;
+  }
+  .option-card:hover { border-color: #F08180; background: #fff5f5; transform: scale(1.02); }
+  .option-card.voted-winner { border-color: #F08180; background: #fff5f5; }
+  .option-card.voted-loser { border-color: #ede8e2; background: #fafaf8; opacity: 0.7; }
+  .option-emoji { font-size: 32px; margin-bottom: 6px; display: block; }
+  .option-brand { font-size: 10px; font-weight: 800; color: #F08180; margin-bottom: 2px; }
+  .option-name { font-size: 11px; color: #333; font-weight: 600; line-height: 1.3; margin-bottom: 4px; }
+  .option-price { font-size: 11px; color: #999; font-weight: 700; }
+  .option-bar-wrap { margin-top: 8px; background: #ede8e2; border-radius: 99px; height: 5px; overflow: hidden; }
+  .option-bar { height: 100%; border-radius: 99px; background: #F08180; transition: width 0.7s cubic-bezier(.4,0,.2,1); width: 0%; }
+  .option-pct { font-size: 12px; font-weight: 800; color: #F08180; margin-top: 5px; min-height: 16px; }
+  .vs-pill {
+    width: 30px;
+    height: 30px;
+    background: #F08180;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 900;
+    flex-shrink: 0;
+    align-self: center;
+    margin-top: -24px;
+  }
+  .battle-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid #f5f0ea;
+    gap: 10px;
+  }
+  .vote-count { font-size: 11px; color: #bbb; }
+  .vote-count b { color: #666; font-weight: 800; }
+  .buy-winner-btn {
+    background: #F08180;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .buy-winner-btn:hover { background: #d96e6e; transform: scale(1.03); }
+
+  /* QUICK VOTE */
+  .qv-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+    border: 1px solid #ede8e2;
+  }
+  .qv-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: #faf5f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .qv-info { flex: 1; min-width: 0; }
+  .qv-category { font-size: 10px; color: #F08180; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+  .qv-name { font-size: 13px; font-weight: 700; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .qv-meta { font-size: 11px; color: #aaa; margin-top: 2px; }
+  .qv-actions { display: flex; flex-direction: column; align-items: center; gap: 3px; flex-shrink: 0; }
+  .heart-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid #f0e8e8;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .heart-btn.active { background: #fff5f5; border-color: #F08180; }
+  .heart-count { font-size: 11px; font-weight: 800; color: #F08180; }
+
+  /* AGE CHIPS */
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; margin-bottom: 6px; }
+  .chip {
+    background: #fff0f0;
+    color: #F08180;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 99px;
+    cursor: pointer;
+    border: 1.5px solid #ffd4d4;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .chip:hover, .chip.active { background: #F08180; color: #fff; border-color: #F08180; }
+
+  /* AFFILIATE NOTE */
+  .aff-note {
+    font-size: 10px;
+    color: #ccc;
+    text-align: center;
+    margin: 10px 0 14px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 99px;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+    white-space: nowrap;
+    font-family: -apple-system, sans-serif;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="status-bar">
+    <span>9:41</span>
+    <span style="font-size:11px;">▲▲▲ ᯤ 🔋</span>
+  </div>
+
+  <div class="header">
+    <div class="header-row">
+      <div>
+        <div class="header-title">Mom <span>Votes</span> 🗳️</div>
+        <div class="header-sub">Real moms. Real picks. Before you buy.</div>
+      </div>
+    </div>
+    <div class="tabs">
+      <div class="tab active">All</div>
+      <div class="tab">Toys</div>
+      <div class="tab">Teethers</div>
+      <div class="tab">Breast Pumps</div>
+      <div class="tab">Clothing</div>
+      <div class="tab">Diapers</div>
+    </div>
+  </div>
+
+  <div class="scroll-area">
+
+    <!-- Age filter -->
+    <div class="section-header" style="margin-top:8px;">
+      <div class="section-title">Baby's Age</div>
+    </div>
+    <div class="chips" style="margin-bottom:16px;">
+      <div class="chip active">0–3 months</div>
+      <div class="chip">4–6 months</div>
+      <div class="chip">7–12 months</div>
+      <div class="chip">1–2 years</div>
+    </div>
+
+    <!-- Winner banner -->
+    <div class="section-header">
+      <div class="section-title">🏆 Latest Winner</div>
+      <div class="see-all">See all</div>
+    </div>
+    <div class="winner-banner">
+      <div class="winner-img-wrap">
+        <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <!-- background -->
+          <rect width="64" height="64" rx="14" fill="#fff0ef"/>
+          <!-- crown badge -->
+          <text x="44" y="14" font-size="13" text-anchor="middle">👑</text>
+          <!-- pump body -->
+          <rect x="18" y="22" width="22" height="26" rx="5" fill="#F08180"/>
+          <rect x="20" y="24" width="18" height="22" rx="4" fill="#f9a8a7"/>
+          <!-- screen -->
+          <rect x="22" y="27" width="14" height="9" rx="2" fill="#fff" opacity="0.9"/>
+          <rect x="24" y="29" width="6" height="1.5" rx="1" fill="#F08180"/>
+          <rect x="24" y="32" width="9" height="1.5" rx="1" fill="#F08180" opacity="0.5"/>
+          <!-- buttons -->
+          <circle cx="24" cy="42" r="2" fill="#fff" opacity="0.8"/>
+          <circle cx="30" cy="42" r="2" fill="#fff" opacity="0.8"/>
+          <circle cx="36" cy="42" r="2" fill="#fff" opacity="0.8"/>
+          <!-- tube -->
+          <path d="M40 32 Q50 32 50 40 L50 48" stroke="#F08180" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- funnel -->
+          <ellipse cx="50" cy="50" rx="5" ry="3" fill="#F08180"/>
+          <path d="M45 50 Q50 56 55 50" fill="#f9a8a7"/>
+        </svg>
+      </div>
+      <div class="winner-info">
+        <div class="winner-eyebrow">Portable Breast Pump · 1,243 votes</div>
+        <div class="winner-name">Spectra S9 Plus</div>
+        <div class="winner-detail">Beat Medela Swing with 68%</div>
+      </div>
+      <button class="winner-btn" onclick="showToast('Opens Shopee affiliate link 🛍️')">Details</button>
+    </div>
+
+    <!-- Battle 1 -->
+    <div class="section-header">
+      <div class="section-title">⚡ Vote Now</div>
+      <div class="see-all">See more</div>
+    </div>
+
+    <div class="battle-card">
+      <div class="battle-eyebrow">🧸 Toys · 0–3 months</div>
+      <div class="battle-question">Which visual tracking toy is better for your baby?</div>
+      <div class="battle-options">
+        <div class="option-card" id="opt1a" onclick="castVote(1,'A')">
+          <span class="option-emoji">🌈</span>
+          <div class="option-brand">Tiny Love</div>
+          <div class="option-name">Mobile Dreamer</div>
+          <div class="option-price">฿890</div>
+          <div class="option-bar-wrap"><div class="option-bar" id="bar1a"></div></div>
+          <div class="option-pct" id="pct1a"></div>
+        </div>
+        <div class="vs-pill">VS</div>
+        <div class="option-card" id="opt1b" onclick="castVote(1,'B')">
+          <span class="option-emoji">🎠</span>
+          <div class="option-brand">Fisher-Price</div>
+          <div class="option-name">Kick & Play Piano</div>
+          <div class="option-price">฿1,290</div>
+          <div class="option-bar-wrap"><div class="option-bar" id="bar1b"></div></div>
+          <div class="option-pct" id="pct1b"></div>
+        </div>
+      </div>
+      <div class="battle-footer">
+        <div class="vote-count" id="vc1"><b>247</b> moms voted</div>
+        <button class="buy-winner-btn" id="buyBtn1" style="display:none" onclick="showToast('Opens Shopee affiliate link 🛒')">🛍️ Buy the winner</button>
+      </div>
+    </div>
+
+    <!-- Battle 2 -->
+    <div class="battle-card">
+      <div class="battle-eyebrow">🦷 Teethers · 4–6 months</div>
+      <div class="battle-question">Which teether is safer and baby-approved?</div>
+      <div class="battle-options">
+        <div class="option-card" id="opt2a" onclick="castVote(2,'A')">
+          <span class="option-emoji">🦒</span>
+          <div class="option-brand">Sophie la Girafe</div>
+          <div class="option-name">Sophie Giraffe</div>
+          <div class="option-price">฿1,290</div>
+          <div class="option-bar-wrap"><div class="option-bar" id="bar2a"></div></div>
+          <div class="option-pct" id="pct2a"></div>
+        </div>
+        <div class="vs-pill">VS</div>
+        <div class="option-card" id="opt2b" onclick="castVote(2,'B')">
+          <span class="option-emoji">🌽</span>
+          <div class="option-brand">Nuby</div>
+          <div class="option-name">Corn Teether</div>
+          <div class="option-price">฿290</div>
+          <div class="option-bar-wrap"><div class="option-bar" id="bar2b"></div></div>
+          <div class="option-pct" id="pct2b"></div>
+        </div>
+      </div>
+      <div class="battle-footer">
+        <div class="vote-count" id="vc2"><b>512</b> moms voted</div>
+        <button class="buy-winner-btn" id="buyBtn2" style="display:none" onclick="showToast('Opens Shopee affiliate link 🛒')">🛍️ Buy the winner</button>
+      </div>
+    </div>
+
+    <!-- Quick vote -->
+    <div class="section-header" style="margin-top:4px;">
+      <div class="section-title">❤️ Rate a Product</div>
+      <div class="see-all">See all</div>
+    </div>
+
+    <div class="qv-card">
+      <div class="qv-icon">🍼</div>
+      <div class="qv-info">
+        <div class="qv-category">Baby Bottle · Budget Pick · ฿320</div>
+        <div class="qv-name">Pigeon Wide Neck SS</div>
+        <div class="qv-meta">❤️ 1,841 moms reviewed</div>
+      </div>
+      <div class="qv-actions">
+        <div class="heart-btn" id="hb1" onclick="toggleHeart('hb1','hc1')">🤍</div>
+        <div class="heart-count" id="hc1">1.8K</div>
+      </div>
+    </div>
+
+    <div class="qv-card">
+      <div class="qv-icon">🎒</div>
+      <div class="qv-info">
+        <div class="qv-category">Baby Carrier · Mid Pick · ฿5,900</div>
+        <div class="qv-name">Ergobaby Omni 360</div>
+        <div class="qv-meta">❤️ 934 moms reviewed</div>
+      </div>
+      <div class="qv-actions">
+        <div class="heart-btn active" id="hb2" onclick="toggleHeart('hb2','hc2')">❤️</div>
+        <div class="heart-count" id="hc2">935</div>
+      </div>
+    </div>
+
+    <div class="qv-card">
+      <div class="qv-icon">🛁</div>
+      <div class="qv-info">
+        <div class="qv-category">Baby Tub · Premium Pick · ฿2,400</div>
+        <div class="qv-name">Stokke Flexi Bath</div>
+        <div class="qv-meta">❤️ 678 moms reviewed</div>
+      </div>
+      <div class="qv-actions">
+        <div class="heart-btn" id="hb3" onclick="toggleHeart('hb3','hc3')">🤍</div>
+        <div class="heart-count" id="hc3">678</div>
+      </div>
+    </div>
+
+    <div class="aff-note">* Shop links are affiliate links — Mali earns a small commission<br>at no extra cost to you, and it never influences vote results.</div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const battles = {
+  1: { voted: null, A: 156, B: 91 },
+  2: { voted: null, A: 310, B: 202 }
+};
+
+function castVote(id, choice) {
+  const b = battles[id];
+  if (b.voted) return;
+  b.voted = choice;
+  b[choice]++;
+
+  const total = b.A + b.B;
+  const pA = Math.round(b.A / total * 100);
+  const pB = 100 - pA;
+
+  document.getElementById('bar' + id + 'a').style.width = pA + '%';
+  document.getElementById('bar' + id + 'b').style.width = pB + '%';
+  document.getElementById('pct' + id + 'a').textContent = pA + '%';
+  document.getElementById('pct' + id + 'b').textContent = pB + '%';
+
+  const winner = pA >= pB ? 'A' : 'B';
+  document.getElementById('opt' + id + 'a').className = 'option-card ' + (winner === 'A' ? 'voted-winner' : 'voted-loser');
+  document.getElementById('opt' + id + 'b').className = 'option-card ' + (winner === 'B' ? 'voted-winner' : 'voted-loser');
+
+  document.getElementById('vc' + id).innerHTML = '<b>' + total + '</b> moms voted';
+  document.getElementById('buyBtn' + id).style.display = 'flex';
+
+  showToast('Voted! 🗳️ Thank you!');
+}
+
+function toggleHeart(btnId, countId) {
+  const btn = document.getElementById(btnId);
+  const countEl = document.getElementById(countId);
+  const isActive = btn.classList.contains('active');
+  const raw = countEl.textContent;
+  let n = raw.includes('K') ? parseFloat(raw) * 1000 : parseInt(raw);
+
+  if (isActive) {
+    btn.classList.remove('active');
+    btn.textContent = '🤍';
+    n--;
+  } else {
+    btn.classList.add('active');
+    btn.textContent = '❤️';
+    n++;
+  }
+  countEl.textContent = n >= 1000 ? (n / 1000).toFixed(1) + 'K' : n;
+}
+
+document.querySelectorAll('.chip').forEach(c => {
+  c.addEventListener('click', function() {
+    document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', function() {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+</script>
+</body>
+</html>
