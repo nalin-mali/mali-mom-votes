@@ -220,6 +220,133 @@
   }
   .buy-winner-btn:hover { background: #d96e6e; transform: scale(1.03); }
 
+  /* PRODUCT LINKS */
+  a.prod-link {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1.5px dotted #F08180;
+    transition: color 0.2s;
+  }
+  a.prod-link:hover { color: #F08180; }
+
+  /* POLL CAROUSEL */
+  .poll-carousel-wrap {
+    overflow: hidden;
+    border-radius: 22px;
+    margin-bottom: 16px;
+  }
+  .poll-carousel {
+    display: flex;
+    transition: transform 0.45s cubic-bezier(.4,0,.2,1);
+    will-change: transform;
+  }
+  .poll-slide {
+    min-width: 100%;
+    flex-shrink: 0;
+  }
+  .poll-slide .battle-card {
+    margin-bottom: 0;
+    border-radius: 22px;
+  }
+  .poll-progress {
+    font-size: 12px;
+    font-weight: 700;
+    color: #F08180;
+    background: #fff0f0;
+    padding: 3px 10px;
+    border-radius: 99px;
+  }
+  .poll-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .poll-nav-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid #F08180;
+    background: #fff;
+    color: #F08180;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    line-height: 1;
+    padding: 0;
+    font-family: inherit;
+  }
+  .poll-nav-btn:hover:not(:disabled) { background: #F08180; color: #fff; }
+  .poll-nav-btn:disabled { border-color: #ddd; color: #ddd; cursor: default; }
+
+  .next-poll-btn {
+    background: #F08180;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .next-poll-btn:hover { background: #d96e6e; transform: scale(1.03); }
+
+  /* POLL ROWS */
+  .five-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .poll-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 2px solid #ede8e2;
+    background: #fafaf8;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    user-select: none;
+  }
+  .poll-row:hover { border-color: #F08180; background: #fff5f5; }
+  .poll-row.selected { border-color: #F08180; background: #fff5f5; }
+  .poll-row.not-selected { opacity: 0.6; }
+  .poll-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+  .poll-emoji { font-size: 22px; flex-shrink: 0; }
+  .poll-info { min-width: 0; }
+  .poll-brand { font-size: 10px; font-weight: 800; color: #F08180; }
+  .poll-name { font-size: 12px; font-weight: 700; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .poll-price { font-size: 11px; color: #aaa; font-weight: 600; }
+  .poll-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; width: 64px; }
+  .poll-bar-wrap { width: 64px; background: #ede8e2; border-radius: 99px; height: 5px; overflow: hidden; }
+  .poll-bar { height: 100%; border-radius: 99px; background: #F08180; transition: width 0.7s cubic-bezier(.4,0,.2,1); width: 0%; }
+  .poll-pct { font-size: 11px; font-weight: 800; color: #F08180; min-height: 14px; text-align: right; }
+  .winner-crown-badge { font-size: 12px; margin-left: 4px; }
+
+  .vote-btn {
+    background: #F08180;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 4px;
+  }
+  .vote-btn:hover { background: #d96e6e; transform: scale(1.05); }
+  .vote-btn:disabled { background: #ddd; color: #aaa; cursor: default; transform: none; }
+  .vote-btn.voted { background: #fff; color: #F08180; border: 1.5px solid #F08180; }
+
   /* QUICK VOTE */
   .qv-card {
     background: #fff;
@@ -409,76 +536,114 @@
       </div>
       <div class="winner-info">
         <div class="winner-eyebrow">Portable Breast Pump · 1,243 votes</div>
-        <div class="winner-name">Spectra S9 Plus</div>
+        <div class="winner-name"><a class="prod-link" style="color:#1a1a1a;" href="https://shopee.co.th/search?keyword=spectra+s9+plus" target="_blank">Spectra S9 Plus</a></div>
         <div class="winner-detail">Beat Medela Swing with 68%</div>
       </div>
       <button class="winner-btn" onclick="showToast('Opens Shopee affiliate link 🛍️')">Details</button>
     </div>
 
-    <!-- Battle 1 -->
+    <!-- Poll Carousel -->
     <div class="section-header">
       <div class="section-title">⚡ Vote Now</div>
-      <div class="see-all">See more</div>
-    </div>
-
-    <div class="battle-card">
-      <div class="battle-eyebrow">🧸 Toys · 0–3 months</div>
-      <div class="battle-question">Which visual tracking toy is better for your baby?</div>
-      <div class="battle-options">
-        <div class="option-card" id="opt1a" onclick="castVote(1,'A')">
-          <span class="option-emoji">🌈</span>
-          <div class="option-brand">Tiny Love</div>
-          <div class="option-name">Mobile Dreamer</div>
-          <div class="option-price">฿890</div>
-          <div class="option-bar-wrap"><div class="option-bar" id="bar1a"></div></div>
-          <div class="option-pct" id="pct1a"></div>
-        </div>
-        <div class="vs-pill">VS</div>
-        <div class="option-card" id="opt1b" onclick="castVote(1,'B')">
-          <span class="option-emoji">🎠</span>
-          <div class="option-brand">Fisher-Price</div>
-          <div class="option-name">Kick & Play Piano</div>
-          <div class="option-price">฿1,290</div>
-          <div class="option-bar-wrap"><div class="option-bar" id="bar1b"></div></div>
-          <div class="option-pct" id="pct1b"></div>
-        </div>
-      </div>
-      <div class="battle-footer">
-        <div class="vote-count" id="vc1"><b>247</b> moms voted</div>
-        <button class="buy-winner-btn" id="buyBtn1" style="display:none" onclick="showToast('Opens Shopee affiliate link 🛒')">🛍️ Buy the winner</button>
+      <div class="poll-nav">
+        <button class="poll-nav-btn" id="prevBtn" onclick="prevPoll()" disabled>‹</button>
+        <div class="poll-progress" id="pollProgress">1 / 50</div>
+        <button class="poll-nav-btn" id="nextBtn" onclick="nextPoll()" disabled>›</button>
       </div>
     </div>
 
-    <!-- Battle 2 -->
-    <div class="battle-card">
-      <div class="battle-eyebrow">🦷 Teethers · 4–6 months</div>
-      <div class="battle-question">Which teether is safer and baby-approved?</div>
-      <div class="battle-options">
-        <div class="option-card" id="opt2a" onclick="castVote(2,'A')">
-          <span class="option-emoji">🦒</span>
-          <div class="option-brand">Sophie la Girafe</div>
-          <div class="option-name">Sophie Giraffe</div>
-          <div class="option-price">฿1,290</div>
-          <div class="option-bar-wrap"><div class="option-bar" id="bar2a"></div></div>
-          <div class="option-pct" id="pct2a"></div>
-        </div>
-        <div class="vs-pill">VS</div>
-        <div class="option-card" id="opt2b" onclick="castVote(2,'B')">
-          <span class="option-emoji">🌽</span>
-          <div class="option-brand">Nuby</div>
-          <div class="option-name">Corn Teether</div>
-          <div class="option-price">฿290</div>
-          <div class="option-bar-wrap"><div class="option-bar" id="bar2b"></div></div>
-          <div class="option-pct" id="pct2b"></div>
-        </div>
-      </div>
-      <div class="battle-footer">
-        <div class="vote-count" id="vc2"><b>512</b> moms voted</div>
-        <button class="buy-winner-btn" id="buyBtn2" style="display:none" onclick="showToast('Opens Shopee affiliate link 🛒')">🛍️ Buy the winner</button>
-      </div>
-    </div>
+    <div class="poll-carousel-wrap">
+      <div class="poll-carousel" id="pollCarousel">
 
-    <!-- Quick vote -->
+        <!-- POLL 1 -->
+        <div class="poll-slide">
+          <div class="battle-card">
+            <div class="battle-eyebrow">🧸 Toys · 0–3 months</div>
+            <div class="battle-question">Which visual tracking toy do you recommend?</div>
+            <div class="five-options" id="poll1">
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🌈</span><div class="poll-info"><div class="poll-brand">Tiny Love</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=tiny+love+mobile+dreamer" target="_blank">Mobile Dreamer</a></div><div class="poll-price">฿890</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb1-0"></div></div><div class="poll-pct" id="pp1-0"></div><button class="vote-btn" id="vb1-0" onclick="castPoll(1,0)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🎠</span><div class="poll-info"><div class="poll-brand">Fisher-Price</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=fisher+price+kick+play+piano" target="_blank">Kick & Play Piano</a></div><div class="poll-price">฿1,290</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb1-1"></div></div><div class="poll-pct" id="pp1-1"></div><button class="vote-btn" id="vb1-1" onclick="castPoll(1,1)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🎵</span><div class="poll-info"><div class="poll-brand">Skip Hop</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=skip+hop+explore+more+gym" target="_blank">Explore & More Gym</a></div><div class="poll-price">฿1,590</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb1-2"></div></div><div class="poll-pct" id="pp1-2"></div><button class="vote-btn" id="vb1-2" onclick="castPoll(1,2)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🦋</span><div class="poll-info"><div class="poll-brand">Lamaze</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=lamaze+freddie+firefly" target="_blank">Freddie the Firefly</a></div><div class="poll-price">฿490</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb1-3"></div></div><div class="poll-pct" id="pp1-3"></div><button class="vote-btn" id="vb1-3" onclick="castPoll(1,3)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🪞</span><div class="poll-info"><div class="poll-brand">Infantino</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=infantino+tummy+time+mirror" target="_blank">Tummy Time Mirror</a></div><div class="poll-price">฿390</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb1-4"></div></div><div class="poll-pct" id="pp1-4"></div><button class="vote-btn" id="vb1-4" onclick="castPoll(1,4)">Vote</button></div></div>
+            </div>
+            <div class="battle-footer">
+              <div class="vote-count" id="vc1"><b>996</b> moms voted</div>
+              <button class="next-poll-btn" id="buyBtn1" style="display:none" onclick="nextPoll()">Vote on Next ›</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- POLL 2 -->
+        <div class="poll-slide">
+          <div class="battle-card">
+            <div class="battle-eyebrow">🦷 Teethers · 4–6 months</div>
+            <div class="battle-question">Which teether is safer and baby-approved?</div>
+            <div class="five-options" id="poll2">
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🦒</span><div class="poll-info"><div class="poll-brand">Sophie la Girafe</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=sophie+la+girafe" target="_blank">Sophie Giraffe</a></div><div class="poll-price">฿1,290</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb2-0"></div></div><div class="poll-pct" id="pp2-0"></div><button class="vote-btn" id="vb2-0" onclick="castPoll(2,0)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🌽</span><div class="poll-info"><div class="poll-brand">Nuby</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=nuby+corn+teether" target="_blank">Corn Teether</a></div><div class="poll-price">฿290</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb2-1"></div></div><div class="poll-pct" id="pp2-1"></div><button class="vote-btn" id="vb2-1" onclick="castPoll(2,1)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🍓</span><div class="poll-info"><div class="poll-brand">Munchkin</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=munchkin+fresh+food+feeder" target="_blank">Fresh Food Feeder</a></div><div class="poll-price">฿350</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb2-2"></div></div><div class="poll-pct" id="pp2-2"></div><button class="vote-btn" id="vb2-2" onclick="castPoll(2,2)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🐙</span><div class="poll-info"><div class="poll-brand">Matchstick Monkey</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=matchstick+monkey+teether" target="_blank">Teething Toy</a></div><div class="poll-price">฿490</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb2-3"></div></div><div class="poll-pct" id="pp2-3"></div><button class="vote-btn" id="vb2-3" onclick="castPoll(2,3)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">❄️</span><div class="poll-info"><div class="poll-brand">Chicco</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=chicco+physio+soft+teether" target="_blank">Physio Soft Teether</a></div><div class="poll-price">฿320</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb2-4"></div></div><div class="poll-pct" id="pp2-4"></div><button class="vote-btn" id="vb2-4" onclick="castPoll(2,4)">Vote</button></div></div>
+            </div>
+            <div class="battle-footer">
+              <div class="vote-count" id="vc2"><b>1,112</b> moms voted</div>
+              <button class="next-poll-btn" id="buyBtn2" style="display:none" onclick="nextPoll()">Vote on Next ›</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- POLL 3 -->
+        <div class="poll-slide">
+          <div class="battle-card">
+            <div class="battle-eyebrow">🍼 Breast Pumps · Back to work</div>
+            <div class="battle-question">Which portable breast pump do moms love most?</div>
+            <div class="five-options" id="poll3">
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">💜</span><div class="poll-info"><div class="poll-brand">Spectra</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=spectra+s9+plus" target="_blank">S9 Plus</a></div><div class="poll-price">฿4,290</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb3-0"></div></div><div class="poll-pct" id="pp3-0"></div><button class="vote-btn" id="vb3-0" onclick="castPoll(3,0)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🩵</span><div class="poll-info"><div class="poll-brand">Medela</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=medela+swing+maxi" target="_blank">Swing Maxi</a></div><div class="poll-price">฿5,900</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb3-1"></div></div><div class="poll-pct" id="pp3-1"></div><button class="vote-btn" id="vb3-1" onclick="castPoll(3,1)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🤍</span><div class="poll-info"><div class="poll-brand">Elvie</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=elvie+pump" target="_blank">Elvie Pump</a></div><div class="poll-price">฿12,900</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb3-2"></div></div><div class="poll-pct" id="pp3-2"></div><button class="vote-btn" id="vb3-2" onclick="castPoll(3,2)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🩷</span><div class="poll-info"><div class="poll-brand">Momcozy</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=momcozy+s12+pro" target="_blank">S12 Pro</a></div><div class="poll-price">฿3,200</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb3-3"></div></div><div class="poll-pct" id="pp3-3"></div><button class="vote-btn" id="vb3-3" onclick="castPoll(3,3)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🌸</span><div class="poll-info"><div class="poll-brand">Haakaa</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=haakaa+electric+pump" target="_blank">Electric Pump</a></div><div class="poll-price">฿1,890</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb3-4"></div></div><div class="poll-pct" id="pp3-4"></div><button class="vote-btn" id="vb3-4" onclick="castPoll(3,4)">Vote</button></div></div>
+            </div>
+            <div class="battle-footer">
+              <div class="vote-count" id="vc3"><b>1,416</b> moms voted</div>
+              <button class="next-poll-btn" id="buyBtn3" style="display:none" onclick="nextPoll()">Vote on Next ›</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- POLL 4 -->
+        <div class="poll-slide">
+          <div class="battle-card">
+            <div class="battle-eyebrow">🎒 Baby Carriers · 0–6 months</div>
+            <div class="battle-question">Which baby carrier do moms swear by?</div>
+            <div class="five-options" id="poll4">
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🟤</span><div class="poll-info"><div class="poll-brand">Ergobaby</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=ergobaby+omni+360" target="_blank">Omni 360</a></div><div class="poll-price">฿5,900</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb4-0"></div></div><div class="poll-pct" id="pp4-0"></div><button class="vote-btn" id="vb4-0" onclick="castPoll(4,0)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🔵</span><div class="poll-info"><div class="poll-brand">BabyBjörn</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=babybjorn+move" target="_blank">Move Carrier</a></div><div class="poll-price">฿7,200</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb4-1"></div></div><div class="poll-pct" id="pp4-1"></div><button class="vote-btn" id="vb4-1" onclick="castPoll(4,1)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🟢</span><div class="poll-info"><div class="poll-brand">LÍLLÉbaby</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=lillebaby+complete" target="_blank">Complete Carrier</a></div><div class="poll-price">฿4,800</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb4-2"></div></div><div class="poll-pct" id="pp4-2"></div><button class="vote-btn" id="vb4-2" onclick="castPoll(4,2)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🟡</span><div class="poll-info"><div class="poll-brand">Beco</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=beco+gemini+carrier" target="_blank">Gemini Carrier</a></div><div class="poll-price">฿3,500</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb4-3"></div></div><div class="poll-pct" id="pp4-3"></div><button class="vote-btn" id="vb4-3" onclick="castPoll(4,3)">Vote</button></div></div>
+              <div class="poll-row"><div class="poll-left"><span class="poll-emoji">🔴</span><div class="poll-info"><div class="poll-brand">Thai Local</div><div class="poll-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=เป้อุ้มเด็กไทย" target="_blank">Local Brand Carrier</a></div><div class="poll-price">฿2,000</div></div></div><div class="poll-right"><div class="poll-bar-wrap"><div class="poll-bar" id="pb4-4"></div></div><div class="poll-pct" id="pp4-4"></div><button class="vote-btn" id="vb4-4" onclick="castPoll(4,4)">Vote</button></div></div>
+            </div>
+            <div class="battle-footer">
+              <div class="vote-count" id="vc4"><b>1,275</b> moms voted</div>
+              <button class="next-poll-btn" id="buyBtn4" style="display:none" onclick="nextPoll()">Vote on Next ›</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- POLL 5 placeholder — more coming -->
+        <div class="poll-slide">
+          <div class="battle-card" style="text-align:center; padding: 40px 20px;">
+            <div style="font-size:40px; margin-bottom:12px;">🗳️</div>
+            <div style="font-size:16px; font-weight:800; color:#1a1a1a; margin-bottom:8px;">More polls coming soon!</div>
+            <div style="font-size:13px; color:#aaa;">We're adding 46 more categories.<br>Check back soon!</div>
+          </div>
+        </div>
+
+      </div><!-- end carousel -->
+    </div><!-- end wrap -->
+
+        <!-- Quick vote -->
     <div class="section-header" style="margin-top:4px;">
       <div class="section-title">❤️ Rate a Product</div>
       <div class="see-all">See all</div>
@@ -488,7 +653,7 @@
       <div class="qv-icon">🍼</div>
       <div class="qv-info">
         <div class="qv-category">Baby Bottle · Budget Pick · ฿320</div>
-        <div class="qv-name">Pigeon Wide Neck SS</div>
+        <div class="qv-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=pigeon+wide+neck+bottle" target="_blank">Pigeon Wide Neck SS</a></div>
         <div class="qv-meta">❤️ 1,841 moms reviewed</div>
       </div>
       <div class="qv-actions">
@@ -501,7 +666,7 @@
       <div class="qv-icon">🎒</div>
       <div class="qv-info">
         <div class="qv-category">Baby Carrier · Mid Pick · ฿5,900</div>
-        <div class="qv-name">Ergobaby Omni 360</div>
+        <div class="qv-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=ergobaby+omni+360" target="_blank">Ergobaby Omni 360</a></div>
         <div class="qv-meta">❤️ 934 moms reviewed</div>
       </div>
       <div class="qv-actions">
@@ -514,7 +679,7 @@
       <div class="qv-icon">🛁</div>
       <div class="qv-info">
         <div class="qv-category">Baby Tub · Premium Pick · ฿2,400</div>
-        <div class="qv-name">Stokke Flexi Bath</div>
+        <div class="qv-name"><a class="prod-link" href="https://shopee.co.th/search?keyword=stokke+flexi+bath" target="_blank">Stokke Flexi Bath</a></div>
         <div class="qv-meta">❤️ 678 moms reviewed</div>
       </div>
       <div class="qv-actions">
@@ -560,33 +725,123 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const battles = {
-  1: { voted: null, A: 156, B: 91 },
-  2: { voted: null, A: 310, B: 202 }
+const polls = {
+  1: { voted: null, counts: [312, 198, 254, 143, 89] },
+  2: { voted: null, counts: [410, 280, 195, 142, 85] },
+  3: { voted: null, counts: [520, 310, 198, 245, 143] },
+  4: { voted: null, counts: [430, 280, 195, 160, 210] }
 };
 
-function castVote(id, choice) {
-  const b = battles[id];
-  if (b.voted) return;
-  b.voted = choice;
-  b[choice]++;
+let currentSlide = 0;
+const totalPolls = 50;
 
-  const total = b.A + b.B;
-  const pA = Math.round(b.A / total * 100);
-  const pB = 100 - pA;
+function goToSlide(idx) {
+  const carousel = document.getElementById('pollCarousel');
+  const slides = carousel.querySelectorAll('.poll-slide');
+  const maxSlide = slides.length - 1;
+  currentSlide = Math.max(0, Math.min(idx, maxSlide));
+  carousel.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+  document.getElementById('pollProgress').textContent = (currentSlide + 1) + ' / ' + totalPolls;
+  // Prev button
+  const prevBtn = document.getElementById('prevBtn');
+  if (prevBtn) prevBtn.disabled = currentSlide === 0;
+  // Next button — only enabled if current poll already voted
+  updateNextBtn();
+  document.querySelector('.poll-carousel-wrap').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
 
-  document.getElementById('bar' + id + 'a').style.width = pA + '%';
-  document.getElementById('bar' + id + 'b').style.width = pB + '%';
-  document.getElementById('pct' + id + 'a').textContent = pA + '%';
-  document.getElementById('pct' + id + 'b').textContent = pB + '%';
+function updateNextBtn() {
+  const nextBtn = document.getElementById('nextBtn');
+  if (!nextBtn) return;
+  const pollId = currentSlide + 1;
+  const poll = polls[pollId];
+  // Enable next if voted or if it's the last slide
+  const carousel = document.getElementById('pollCarousel');
+  const slides = carousel.querySelectorAll('.poll-slide');
+  nextBtn.disabled = !(poll && poll.voted !== null) || currentSlide >= slides.length - 1;
+}
 
-  const winner = pA >= pB ? 'A' : 'B';
-  document.getElementById('opt' + id + 'a').className = 'option-card ' + (winner === 'A' ? 'voted-winner' : 'voted-loser');
-  document.getElementById('opt' + id + 'b').className = 'option-card ' + (winner === 'B' ? 'voted-winner' : 'voted-loser');
+function nextPoll() {
+  goToSlide(currentSlide + 1);
+}
 
-  document.getElementById('vc' + id).innerHTML = '<b>' + total + '</b> moms voted';
-  document.getElementById('buyBtn' + id).style.display = 'flex';
+function prevPoll() {
+  goToSlide(currentSlide - 1);
+}
 
+// Touch/swipe support
+let touchStartX = 0;
+let touchEndX = 0;
+document.addEventListener('DOMContentLoaded', function() {
+  const wrap = document.querySelector('.poll-carousel-wrap');
+  if (!wrap) return;
+  wrap.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+  wrap.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        // swipe left — go next (only if voted)
+        const pollId = currentSlide + 1;
+        if (polls[pollId] && polls[pollId].voted !== null) nextPoll();
+      } else {
+        // swipe right — go back freely
+        prevPoll();
+      }
+    }
+  }, { passive: true });
+});
+
+function castPoll(pollId, choiceIdx, baseCount) {
+  const p = polls[pollId];
+  if (p.voted !== null) return;
+  p.voted = choiceIdx;
+  p.counts[choiceIdx]++;
+
+  const total = p.counts.reduce((a, b) => a + b, 0);
+  let maxPct = 0;
+  let winnerIdx = 0;
+
+  p.counts.forEach((count, i) => {
+    const pct = Math.round(count / total * 100);
+    if (pct > maxPct) { maxPct = pct; winnerIdx = i; }
+    document.getElementById('pb' + pollId + '-' + i).style.width = pct + '%';
+    document.getElementById('pp' + pollId + '-' + i).textContent = pct + '%';
+  });
+
+  const rows = document.querySelectorAll('#poll' + pollId + ' .poll-row');
+  rows.forEach((row, i) => {
+    row.classList.add(i === choiceIdx ? 'selected' : 'not-selected');
+    if (i === winnerIdx) {
+      const brand = row.querySelector('.poll-brand');
+      if (!brand.querySelector('.winner-crown-badge')) {
+        const crown = document.createElement('span');
+        crown.className = 'winner-crown-badge';
+        crown.textContent = ' 👑';
+        brand.appendChild(crown);
+      }
+    }
+  });
+
+  document.getElementById('vc' + pollId).innerHTML = '<b>' + total.toLocaleString() + '</b> moms voted';
+  document.getElementById('buyBtn' + pollId).style.display = 'flex';
+  // Update all vote buttons in this poll
+  for (let i = 0; i < 5; i++) {
+    const btn = document.getElementById('vb' + pollId + '-' + i);
+    if (!btn) continue;
+    if (i === choiceIdx) {
+      btn.textContent = '✓ Voted';
+      btn.classList.add('voted');
+    } else {
+      btn.disabled = true;
+      btn.textContent = 'Vote';
+    }
+  }
+  // Show next vote button
+  const nextBtn = document.getElementById('buyBtn' + pollId);
+  if (nextBtn) nextBtn.style.display = 'flex';
+  // Update nav arrow
+  updateNextBtn();
   showToast('Voted! 🗳️ Thank you!');
 }
 
@@ -609,9 +864,21 @@ function toggleHeart(btnId, countId) {
   countEl.textContent = n >= 1000 ? (n / 1000).toFixed(1) + 'K' : n;
 }
 
+// Init nav buttons
+const _prevBtn = document.getElementById('prevBtn');
+if (_prevBtn) _prevBtn.disabled = true;
+const _nextBtn = document.getElementById('nextBtn');
+if (_nextBtn) _nextBtn.disabled = true;
+
 document.querySelectorAll('.chip').forEach(c => {
   c.addEventListener('click', function() {
-    document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+    // Init nav buttons
+const _prevBtn = document.getElementById('prevBtn');
+if (_prevBtn) _prevBtn.disabled = true;
+const _nextBtn = document.getElementById('nextBtn');
+if (_nextBtn) _nextBtn.disabled = true;
+
+document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
     this.classList.add('active');
   });
 });
